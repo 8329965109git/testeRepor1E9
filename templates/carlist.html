@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Car list</title>
+    <style>
+      .blue {
+        background-color: blue;
+        color: white;
+      }
+
+      .white {
+        background-color: white;
+        color: black;
+      }
+
+      .center-heading {
+        text-align: center;
+      }
+
+      .bullet-list {
+        text-align: center;
+      }
+
+      .bullet-list li {
+        list-style-type: disc;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="center-heading">List of Cars</h1>
+    <ul class="bullet-list">
+      {% for car, row_style in car_data_with_styles %}
+      <li class="{{ row_style }}">{{ car }}</li>
+      {% endfor %}
+    </ul>
+    <!-- ... -->
+    {% if car_data %}
+    <table
+      border="2"
+      align="center"
+      style="border-collapse: collapse; width: 80%; margin: 0 auto"
+    >
+      <thead>
+        <th style="border: 1px solid #000; padding: 8px; text-align: center">
+          maker
+        </th>
+        <th style="border: 1px solid #000; padding: 8px; text-align: center">
+          car_name
+        </th>
+        <th style="border: 1px solid #000; padding: 8px; text-align: center">
+          hpp
+        </th>
+        <th style="border: 1px solid #000; padding: 8px; text-align: center">
+          launch_date
+        </th>
+      </thead>
+      {% for item in car_data %}
+      <tr>
+        <td style="border: 1px solid #000; padding: 8px">{{ item.maker }}</td>
+        <td style="border: 1px solid #000; padding: 8px">
+          {{ item.car_name }}
+        </td>
+        <td style="border: 1px solid #000; padding: 8px">{{ item.hpp }}</td>
+        <td style="border: 1px solid #000; padding: 8px">
+          {{ item.launch_date }}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    {%else%}
+    <h1>No data Found</h1>
+    {%endif%}
+  </body>
+</html>

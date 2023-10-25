@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Car list</title>
+  </head>
+  <body>
+    <div class="container" align="Center">
+      <h> Maker Form here </h>
+      <form method="POST">
+        {{Make_form.as_p}} {% csrf_token %}
+        <input type="submit" class="btn btn-primary" name="" value="submit" />
+      </form>
+    </div>
+  </body>
+</html>

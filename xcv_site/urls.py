@@ -23,3 +23,7 @@ urlpatterns += [
     path('', HomeView.as_view(), name='home'),
     path('apply/', ApplyView.as_view(), name='apply'),
 ]
+
+urlpatterns += [
+     path('cars/', include('cars.urls')),
+]

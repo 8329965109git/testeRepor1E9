@@ -31,7 +31,8 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'localhost',
     'pythonjobs.in',
-    'www.pythonjobs.in'
+    'www.pythonjobs.in',
+    '127.0.0.1',
 ]
 
 
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     'xcv_core',
     'xcv_seo',
     'xcv_core.xcv_auth',
+    'cars',
 ]
 
 MIDDLEWARE = [
