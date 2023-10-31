@@ -5,6 +5,8 @@ from django import forms
 from .models import Maker
 
 # Create a ModelForm for the 'Maker' model
+
+
 class MakerForm(forms.ModelForm):
     class Meta:
         # Specify the model to use for the form

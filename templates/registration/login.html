@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Login Page</title>
+    <!-- Include Bootstrap CSS (you need to download and host this file or link to a CDN) -->
+    <link rel="stylesheet" href="path-to-bootstrap/bootstrap.min.css" />
+    <style>
+      body {
+        background-color: #f0f0f0;
+      }
+      .container {
+        margin-top: 100px;
+      }
+      .form-container {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h2 {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" align="Center">
+      <div class="row">
+        <div class="col-md-6 offset-md-3 form-container">
+          <h2>Login Page</h2>
+          <form method="POST">
+            {{ form.as_p }}
+            <div style="display: none">{% csrf_token %}</div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

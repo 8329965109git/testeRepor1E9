@@ -28,6 +28,9 @@ This password is entirely numeric.
 Bypass password validation and create user anyway? [y/N]: y
 Superuser created successfully
 
+surajT
+pass=123456789
+
 4)
 Change the background colour of number ‘2’ to brown. On the ‘Senior Developer Role’ page of the project.
 path:templates\apply.html
@@ -267,3 +270,116 @@ class Migration(migrations.Migration):
 
 16)
 Using the django shell perform basic crud operations on any one of the models. Place the screenshots in the test_data folder (Create one if not present in the project)
+
+17) Implement basic authentication in the app and make sure only authenticated users access the HomePage of the project.
+
+from django.utils.decorators import method_decorator
+
+@method_decorator(login_required, name='dispatch')
+class HomeView(SEOMixin, TemplateView):
+    template_name = 'home.html'
+    extra_context = {
+        "roles": [
+
+from .views import HomeView, ApplyView
+urlpatterns += [
+    path('', HomeView.as_view(), name='home'),
+    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('apply/', ApplyView.as_view(), name='apply'),
+]
+
+18)
+Add a Car and Maker Object to the respective models from the django admin panel.
+class CarAdmin(admin.ModelAdmin):
+    list_display = ['maker','car_name','hpp','launch_date']
+    list_filter = ('launch_date',) 
+    search_fields = ['car_name'] 
+admin.site.register(car, CarAdmin)
+
+19)
+Create a simple Class Based View for your custom model to display the list of all cars.
+class CarListView(ListView):
+    model = car
+    template_name = 'carlist2.html'  
+    context_object_name = 'cars'
+Create a simple Template to show the list of your model objects.
+template name=carlist2.html
+Add new routes and display the content using the class based view and template that you have just created. Route: ‘cars/carlist/’ 
+path('carlist',views.CarListView.as_view(), name='carlist')
+
+
+20)
+Add a detailed view which shows all the fields of your model for the specific instance as provided with the API as follows - /cars/<name_of_the_car>. Here, the name of the car will tell you which object to generate the detailed view of.
+class CarDetailView(RetrieveAPIView):
+    queryset = car.objects.all()
+    serializer_class = CarSerializer
+    lookup_field = 'car_name'
+
+21)
+Implement Serializers for Car Model with the following fields:
+1. Maker
+2. Name
+3. Launch Date
+4. Mileage and make necessary changes to the model if required for the above step.
+
+
+    class CarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=car
+        fields=['maker','car_name','launch_date']
+
+22)
+Implement Serializers in GET/POST API for the Car model.
+
+
+33.Implement a django builtin request signal in your code and print/log information of an event using the signal handler.
+# myapp/signals.py
+from django.contrib.auth.signals import user_logged_in, user_logged_out
+from django.dispatch import receiver
+from django.contrib.auth.models import User
+
+
+@receiver(user_logged_in)
+def login_success(sender, request, user, **kwargs):
+    with open("login_logs.txt", "a") as log_file:
+        log_file.write("---\n")
+        log_file.write("Logging-in signal... Run Intro\n")
+        log_file.write(f"Sender: {sender}\n")
+        log_file.write(f"Request: {request}\n")
+        log_file.write(f"User: {user}\n")
+        log_file.write(f"Kwargs: {kwargs}\n")
+
+
+@receiver(user_logged_out)
+def logout_success(sender, request, user, **kwargs):
+    with open("logout_logs.txt", "a") as log_file:
+        log_file.write("---\n")
+        log_file.write("Logging-out signal... Run Outro\n")
+        log_file.write(f"Sender: {sender}\n")
+        log_file.write(f"Request: {request}\n")
+        log_file.write(f"User: {user}\n")
+        log_file.write(f"Kwargs: {kwargs}\n")
+
+
+35
+Create a tagging mixin that allows you to put a tag on each model instance and use it for Maker and Car models
+from taggit.managers import TaggableManager
+
+# Create your models here.
+
+
+class Maker(models.Model):
+    Name = models.CharField(max_length=100)
+    update_date = models.DateField(blank=True, null=True)
+    count = models.IntegerField(default=0)
+    tags = TaggableManager()
+
+    def __str__(self):
+        return self.Name
+
+class MakerAdmin(admin.ModelAdmin):
+    list_display = ["Name", "tag_list"]
+
+    # Define the fields to display in the admin list view
+    def tag_list(self, obj):
+        return ", ".join(o.name for o in obj.tags.all())

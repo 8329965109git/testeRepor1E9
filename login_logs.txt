@@ -1,0 +1,12 @@
+---
+Logging-in signal... Run Intro
+Sender: <class 'django.contrib.auth.models.User'>
+Request: <WSGIRequest: POST '/login/?next=/'>
+User: surajT
+Kwargs: {'signal': <django.dispatch.dispatcher.Signal object at 0x0000020A4C0A3020>}
+---
+Logging-in signal... Run Intro
+Sender: <class 'django.contrib.auth.models.User'>
+Request: <WSGIRequest: POST '/login/?next=/'>
+User: surajT
+Kwargs: {'signal': <django.dispatch.dispatcher.Signal object at 0x0000025A4ACA6CC0>}

@@ -1,0 +1,6 @@
+---
+Logging-out signal... Run Outro
+Sender: <class 'django.contrib.auth.models.User'>
+Request: <WSGIRequest: GET '/admin/logout/'>
+User: surajT
+Kwargs: {'signal': <django.dispatch.dispatcher.Signal object at 0x0000025A4ACA6CF0>}

@@ -1,4 +1,6 @@
 from .forms import ChangePasswordForm, CustomAuthenticationForm
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -7,10 +9,11 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect, reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
+from .models import car
 
 
 class HomeView(TemplateView):
-    template_name = 'home.html'
+    template_name = "home.html"
     # extra_context = {
     #     'canonical': reverse('xcv_auth:home')
     # }
@@ -23,15 +26,15 @@ def logout_request(request):
 
 
 def login_request(request):
-    next_path = request.GET.get('next')
+    next_path = request.GET.get("next")
     if request.user.is_authenticated:
         return redirect(settings.LOGIN_REDIRECT_URL)
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = AuthenticationForm(request=request, data=request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
@@ -49,12 +52,12 @@ def login_request(request):
         # "canonical": reverse('xcv_auth:login'),
         "form": form,
     }
-    return render(request, 'login.html', data)
+    return render(request, "login.html", data)
 
 
 class ChangePasswordView(TemplateView):
     form_class = ChangePasswordForm
-    template_name = 'change-password.html'
+    template_name = "change-password.html"
     # extra_context = {
     #     'canonical': reverse('xcv_auth:change_password')
     # }
@@ -67,7 +70,12 @@ class ChangePasswordView(TemplateView):
         form = self.form_class(data=request.POST, user=request.user)
         if form.is_valid():
             user = request.user
-            user.set_password(form.cleaned_data.get('new_password'))
+            user.set_password(form.cleaned_data.get("new_password"))
             user.save()
             messages.success(request, "Password changed successfully")
         return render(request, self.template_name, context=dict(form=form))
+
+
+class Carlist(APIView):
+    def get(self, r):
+        data = car.objects.all()

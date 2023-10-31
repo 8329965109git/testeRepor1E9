@@ -1,7 +1,9 @@
 from django.views.generic import TemplateView
 from xcv_seo.mixin import SEOMixin
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
-
+@method_decorator(login_required, name='dispatch')
 class HomeView(SEOMixin, TemplateView):
     template_name = 'home.html'
     extra_context = {
